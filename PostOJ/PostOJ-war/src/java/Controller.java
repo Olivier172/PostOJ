@@ -6,11 +6,13 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -71,7 +73,30 @@ public class Controller extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String submitValue = request.getParameter("forms");
+        if(submitValue.equals("toTracking")){
+            HttpSession sessie = request.getSession();
+            sessie.setAttribute("packetID", request.getParameter("packetID"));
+            RequestDispatcher view = request.getRequestDispatcher("tracking.jsp");
+            view.forward(request, response);
+        }
+        else if(submitValue.equals("return")){
+            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+            view.forward(request, response);
+        }
+        
+        else if(submitValue.equals("login bediende")){
+            RequestDispatcher view = request.getRequestDispatcher("bOverzicht.jsp");
+            view.forward(request, response);
+        }
+        else if(submitValue.equals("login koerier")){
+            RequestDispatcher view = request.getRequestDispatcher("kOverzicht.jsp");
+            view.forward(request, response);
+        }
+        else if(submitValue.equals("toRegister")){
+            RequestDispatcher view = request.getRequestDispatcher("register.jsp");
+            view.forward(request, response);
+        }
     }
 
     /**

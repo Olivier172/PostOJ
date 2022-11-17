@@ -1,6 +1,6 @@
 <%-- 
     Document   : tracking
-    Created on : 17-nov-2022, 15:43:13
+    Created on : 17-nov-2022, 9:20:29
     Author     : r0723037
 --%>
 
@@ -13,14 +13,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <style>
-            table, th, td {
-                border: 1px solid;
+            login {
+                text-align:right;
             }
         </style>
     </head>
-    
     <body>
-        <h1>Tracking:</h1>
+        <login>
+            <form method="post" action= "Controller.do">
+                <input type="submit" value="login bediende" name="forms">
+                <input type="submit" value="login koerier" name="forms">
+            </form>
+        </login>
+        <h1>INDEX:</h1> 
+        
         <h4>
             Iedereen: Naast bovenstaande afgeschermde pagina’s, 
             is er ook een publieke pagina, 
@@ -28,19 +34,21 @@
             Hierop kan een gebruiker een identificatienummer ingeven 
             en dan de status van dit pakketje te zien krijgen.
         </h4>
-        <p>
-            <table><tr>
-                <th>PacketID</th>
-                <th>Status</th>
-            </tr>
-            <tr>
-                <td> <c:out value = "${sessionScope['packetID']}"/>  </td>
-                <td>test</td>
-            </tr></table>
-            
-        </p>
         <form method="post" action= "Controller.do">
-            <input type="submit" value="return" name="forms">
+            <p>
+                packetID:
+                <input type="number" name="packetID"/>
+            </p>
+            <input type="submit" value="toTracking" name="forms">
         </form>
+            
+        
+        
     </body>
+   
+        
+             
+         
+        
+    
 </html>
