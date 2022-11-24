@@ -27,18 +27,7 @@
         </h4>
         <form method="post" action= "Controller.do">
             <p>
-                Naam: <input type="text" name="name"/> <br>
-                Adres: <input type="text" name="address"/> <br>
-                Postcode: <input type="number" name="postcode" placeholder="postcode"/> Gemeente: <input type="text" name="gemeente" placeholder="gemeente"/> <br>
-                Gewicht: <input type="number" name="gewicht"/> [kg]<br>
-                Commentaar: <input type="text" name="commentaar"/> <br>
-                Kourier: <select name="kourierKeuze">
-                    <!--
-                            <c:forEach var="itr" items="${applicationScope.loc}">
-                               <option value="${itr.getLnr()}"> ${itr.getLnaam()} </option> 
-                            </c:forEach>
-                    -->        
-                        </select> <br>
+                
             </p>
             <input type="submit" value="register" name="forms">
         </form>
