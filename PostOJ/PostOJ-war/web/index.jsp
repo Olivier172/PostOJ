@@ -34,7 +34,7 @@
             Hierop kan een gebruiker een identificatienummer ingeven 
             en dan de status van dit pakketje te zien krijgen.
         </h4>
-        <form method="post" action= "Controller.do">
+        <form method="post" action= "<c:url value='Controller.do'/>">
             <p>
                 packetID:
                 <input type="number" name="packetID"/>

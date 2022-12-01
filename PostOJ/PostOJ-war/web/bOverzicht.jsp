@@ -28,7 +28,7 @@
             moet de bediende de detailgegevens van dit pakket kunnen raadplegen en eventueel wijzigen.
             De status van het pakket kan de bediende niet wijzigen.
         </h4>
-        <form method="post" action= "Controller.do">
+        <form method="post" action= "<c:url value='Controller.do'/>">
             <p>
                 <table>
                     <tr>

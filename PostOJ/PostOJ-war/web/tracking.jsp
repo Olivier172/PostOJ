@@ -39,7 +39,7 @@
             </tr></table>
             
         </p>
-        <form method="post" action= "Controller.do">
+        <form method="post" action= "<c:url value='Controller.do'/>">
             <input type="submit" value="return" name="forms">
         </form>
     </body>

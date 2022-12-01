@@ -25,7 +25,7 @@
             Naast deze gegevens die manueel worden ingevuld, 
             moet er ook onthouden worden op welk moment het pakket werd toegevoegd.
         </h4>
-        <form method="post" action= "Controller.do">
+        <form method="post" action= "<c:url value='Controller.do'/>">
             <p>
                 Naam: <input type="text" name="name"/> <br>
                 Adres: <input type="text" name="address"/> <br>

@@ -28,7 +28,7 @@
             Eénmaal een pakket “geleverd” is, kan zijn status niet meer veranderd worden. 
             De status van een “probleem” pakket kan wel nog veranderen naar “geleverd”.
         </h4>
-        <form method="post" action= "Controller.do">
+        <form method="post" action= "<c:url value='Controller.do'/>">
             <p>
                 
             </p>
