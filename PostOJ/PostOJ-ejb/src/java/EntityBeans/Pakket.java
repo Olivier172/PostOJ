@@ -6,6 +6,7 @@
 package EntityBeans;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,13 +16,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author MM
+ * @author ovanl
  */
 @Entity
 @Table(name = "PAKKET")
@@ -32,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Pakket.findByStatus", query = "SELECT p FROM Pakket p WHERE p.status = :status")
     , @NamedQuery(name = "Pakket.findByDatum", query = "SELECT p FROM Pakket p WHERE p.datum = :datum")
     , @NamedQuery(name = "Pakket.findByTijd", query = "SELECT p FROM Pakket p WHERE p.tijd = :tijd")
+    , @NamedQuery(name = "Pakket.findByGewicht", query = "SELECT p FROM Pakket p WHERE p.gewicht = :gewicht")
     , @NamedQuery(name = "Pakket.findByCommentaar", query = "SELECT p FROM Pakket p WHERE p.commentaar = :commentaar")})
 public class Pakket implements Serializable {
 
@@ -44,13 +48,15 @@ public class Pakket implements Serializable {
     @Size(max = 20)
     @Column(name = "STATUS")
     private String status;
-    @Size(max = 20)
     @Column(name = "DATUM")
-    private String datum;
-    @Size(max = 20)
+    @Temporal(TemporalType.DATE)
+    private Date datum;
     @Column(name = "TIJD")
-    private String tijd;
-    @Size(max = 20)
+    @Temporal(TemporalType.TIME)
+    private Date tijd;
+    @Column(name = "GEWICHT")
+    private Integer gewicht;
+    @Size(max = 500)
     @Column(name = "COMMENTAAR")
     private String commentaar;
     @JoinColumn(name = "PAID", referencedColumnName = "AID")
@@ -83,20 +89,28 @@ public class Pakket implements Serializable {
         this.status = status;
     }
 
-    public String getDatum() {
+    public Date getDatum() {
         return datum;
     }
 
-    public void setDatum(String datum) {
+    public void setDatum(Date datum) {
         this.datum = datum;
     }
 
-    public String getTijd() {
+    public Date getTijd() {
         return tijd;
     }
 
-    public void setTijd(String tijd) {
+    public void setTijd(Date tijd) {
         this.tijd = tijd;
+    }
+
+    public Integer getGewicht() {
+        return gewicht;
+    }
+
+    public void setGewicht(Integer gewicht) {
+        this.gewicht = gewicht;
     }
 
     public String getCommentaar() {

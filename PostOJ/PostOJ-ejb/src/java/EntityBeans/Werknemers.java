@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author MM
+ * @author ovanl
  */
 @Entity
 @Table(name = "WERKNEMERS")
@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Werknemers.findAll", query = "SELECT w FROM Werknemers w")
     , @NamedQuery(name = "Werknemers.findByWid", query = "SELECT w FROM Werknemers w WHERE w.wid = :wid")
+    , @NamedQuery(name = "Werknemers.findByWnaam", query = "SELECT w FROM Werknemers w WHERE w.wnaam = :wnaam")
     , @NamedQuery(name = "Werknemers.findByFunctie", query = "SELECT w FROM Werknemers w WHERE w.functie = :functie")})
 public class Werknemers implements Serializable {
 
@@ -39,7 +40,10 @@ public class Werknemers implements Serializable {
     @NotNull
     @Column(name = "WID")
     private Integer wid;
-    @Size(max = 20)
+    @Size(max = 40)
+    @Column(name = "WNAAM")
+    private String wnaam;
+    @Size(max = 40)
     @Column(name = "FUNCTIE")
     private String functie;
     @OneToMany(mappedBy = "pwid")
@@ -58,6 +62,14 @@ public class Werknemers implements Serializable {
 
     public void setWid(Integer wid) {
         this.wid = wid;
+    }
+
+    public String getWnaam() {
+        return wnaam;
+    }
+
+    public void setWnaam(String wnaam) {
+        this.wnaam = wnaam;
     }
 
     public String getFunctie() {

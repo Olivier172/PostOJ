@@ -5,13 +5,23 @@
  */
 package Beans;
 
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
- *
- * @author r0723037
+ * @author Olivier Van Lier  
+ * Dit is de interface voor de datamanager, alle methodes moeten hier gedeclareerd zijn om die extern te gebruiken.
  */
 @Remote
 public interface DataManagerRemote {
-    
+    public List getWerknemers();
+    public List getKoeriers();
+    public List getBediendes();    
+    public List getAdressen();
+    public int getAdresAid(String naam);
+    public List getPakketten();
+    public List<String> getPakketDetails(int pid);
+    public void addWerknemers(String functie, String wnaam);
+    public int addAdres(String naam, String straatennr, Integer postcode, String gemeente);
+    public void addPakket(String commentaar,int gewicht, int paid, int pwid);
 }

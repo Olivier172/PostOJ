@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>PostOJ</title>
         <style>
             login {
                 text-align:right;
@@ -21,7 +21,11 @@
     <body>
         <login>
             <form method="post" action= "Controller.do">
+                <input type="hidden" name="naarWaar" value="bOverzicht">
                 <input type="submit" value="login bediende" name="forms">
+            </form>
+            <form method="post" action= "Controller.do">
+                <input type="hidden" name="naarWaar" value="kOverzicht">
                 <input type="submit" value="login koerier" name="forms">
             </form>
         </login>
@@ -39,6 +43,7 @@
                 packetID:
                 <input type="number" name="packetID"/>
             </p>
+            <input type="hidden" name="naarWaar" value="tracking">
             <input type="submit" value="toTracking" name="forms">
         </form>
             

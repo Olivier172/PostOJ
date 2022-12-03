@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author MM
+ * @author ovanl
  */
 @Entity
 @Table(name = "ADRES")
@@ -42,15 +42,15 @@ public class Adres implements Serializable {
     @NotNull
     @Column(name = "AID")
     private Integer aid;
-    @Size(max = 20)
+    @Size(max = 100)
     @Column(name = "NAAM")
     private String naam;
-    @Size(max = 20)
+    @Size(max = 100)
     @Column(name = "STRAATENNR")
     private String straatennr;
     @Column(name = "POSTCODE")
     private Integer postcode;
-    @Size(max = 20)
+    @Size(max = 100)
     @Column(name = "GEMEENTE")
     private String gemeente;
     @OneToMany(mappedBy = "paid")

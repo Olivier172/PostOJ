@@ -1,7 +1,7 @@
 <%-- 
     Document   : bOverzicht
     Created on : 17-nov-2022, 9:21:40
-    Author     : r0723037
+    Author     : Olivier en Jorn
 --%>
 
 <%@page import="java.util.*"%>
@@ -11,10 +11,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Overzicht bediendes</title>
         <style>
             table, th, td {
                 border: 1px solid;
+                 border-collapse: collapse;
             }
         </style>
     </head>
@@ -35,17 +36,20 @@
                         <th>PacketID</th>
                         <th>Status</th>
                     </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
+                    <c:forEach var="itr" items="${sessionScope.pakketjes}">
+                        <tr>
+                            <td><input type="submit" value="${itr.getPid()}" name="forms"></td>
+                            <td>${itr.getStatus()}</td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </p>
-            <input type="submit" value="toRegister" name="forms">
+        <input type="hidden" name="naarWaar" value="bDetails">
+        </form>
+        
+        <form method="post" action= "<c:url value='Controller.do'/>">
+            <input type="hidden" name="naarWaar" value="register">
+            <input type="submit" value="Een nieuw pakket registreren" name="forms">
         </form>
         
     </body>

@@ -14,23 +14,25 @@ drop table Werknemers;
 
 create table Werknemers(
     wid int primary key,
-    functie varchar(20)
+    wnaam varchar(40),
+    functie varchar(40)
 );
 
 create table Adres(
     aid int primary key,
-    naam varchar(20),
-    straatennr varchar(20),
+    naam varchar(100),
+    straatennr varchar(100),
     postcode int,
-    gemeente varchar(20)
+    gemeente varchar(100)
 );
 
 create table Pakket(
     pid int primary key,
     status varchar(20),
-    datum varchar(20),
-    tijd varchar(20),
-    commentaar varchar(20),
+    datum date,
+    tijd time,
+    gewicht int,
+    commentaar varchar(500),
     paid int  references Adres,
     pwid int  references Werknemers
 );

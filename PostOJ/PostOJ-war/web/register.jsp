@@ -11,7 +11,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Registreren</title>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+        </style>
     </head>
     <body>
         <h1>Register:</h1>
@@ -27,20 +33,51 @@
         </h4>
         <form method="post" action= "<c:url value='Controller.do'/>">
             <p>
-                Naam: <input type="text" name="name"/> <br>
-                Adres: <input type="text" name="address"/> <br>
-                Postcode: <input type="number" name="postcode" placeholder="postcode"/> Gemeente: <input type="text" name="gemeente" placeholder="gemeente"/> <br>
-                Gewicht: <input type="number" name="gewicht"/> [kg]<br>
-                Commentaar: <input type="text" name="commentaar"/> <br>
-                Kourier: <select name="kourierKeuze">
-                    <!--
-                            <c:forEach var="itr" items="${applicationScope.loc}">
-                               <option value="${itr.getLnr()}"> ${itr.getLnaam()} </option> 
+                <table>
+                    <tr>
+                        <td>Naam:</td>
+                        <td><input type="text" name="naam"/></td>
+                    </tr>
+                    <tr>
+                        <td>Adres:</td>
+                        <td><input type="text" name="adres" placeholder="bv Abdijstraat 69"/></td>
+                    </tr>
+                    <tr>
+                        <td>Postcode:</td>
+                        <td><input type="number" name="postcode" placeholder="bv. 2000"/></td>
+                    </tr>
+                    <tr>
+                        <td>Gemeente:</td>
+                        <td><input type="text" name="gemeente" placeholder="bv. Antwerpen"/></td>
+                    </tr>
+                    <tr>
+                        <td>Gewicht:</td>
+                        <td><input type="number" name="gewicht"/> [kg]</td>
+                    </tr>
+                    <tr>
+                        <td>Commentaar:</td>
+                        <td><input type="text" name="commentaar"/></td>
+                    </tr>
+                    <tr>
+                        <td>Kourier:</td>
+                        <td>
+                            <select name="kourierKeuze">
+                            <c:forEach var="itr" items="${sessionScope.koeriers}">
+                                <option value="${itr.getWid()}"> ${itr.getWnaam()} </option> 
                             </c:forEach>
-                    -->        
-                        </select> <br>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
             </p>
-            <input type="submit" value="register" name="forms">
+            <input type="hidden" name="actie" value="nieuwpakket">
+            <input type="hidden" name="naarWaar" value="bOverzicht">
+            <input type="submit" value="registreer" name="forms">
+        </form>
+        <form method="post" action= "<c:url value='Controller.do'/>">
+            <!--hier is geen actie hiddenfield omdat we niets willen registreren als we terug gaan -->
+            <input type="hidden" name="naarWaar" value="bOverzicht">
+            <input type="submit" value="terug" name="forms">
         </form>
         
     </body>

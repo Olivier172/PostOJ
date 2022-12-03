@@ -40,6 +40,7 @@
             
         </p>
         <form method="post" action= "<c:url value='Controller.do'/>">
+            <input type="hidden" name="naarWaar" value="index">
             <input type="submit" value="return" name="forms">
         </form>
     </body>

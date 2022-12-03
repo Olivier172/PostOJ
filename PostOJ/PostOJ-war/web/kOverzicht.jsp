@@ -32,7 +32,8 @@
             <p>
                 
             </p>
-            <input type="submit" value="koverzicht" name="forms">
+            <input type="hidden" name="naarWaar" value="kDetails">
+            <input type="submit" value="id nrs om op te klikken" name="forms">
         </form>
         
     </body>
