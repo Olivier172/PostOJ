@@ -28,17 +28,16 @@
             Hierop kan een gebruiker een identificatienummer ingeven 
             en dan de status van dit pakketje te zien krijgen.
         </h4>
-        <p>
-            <table><tr>
+        <table>
+            <tr>
                 <th>PacketID</th>
                 <th>Status</th>
             </tr>
             <tr>
-                <td> <c:out value = "${sessionScope['packetID']}"/>  </td>
-                <td> </td>
-            </tr></table>
-            
-        </p>
+                <td> ${sessionScope.pid}  </td>
+                <td> ${sessionScope.status}</td>
+            </tr>
+        </table>
         <form method="post" action= "<c:url value='Controller.do'/>">
             <input type="hidden" name="naarWaar" value="index">
             <input type="submit" value="return" name="forms">

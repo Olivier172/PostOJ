@@ -30,20 +30,50 @@
             De status van het pakket kan de bediende niet wijzigen.
         </h4>
         <form method="post" action= "<c:url value='Controller.do'/>">
-            <p>
-                <table>
-                    <tr>
-                        <th>PacketID</th>
-                        <th>Status</th>
-                    </tr>
-                    <c:forEach var="itr" items="${sessionScope.pakketjes}">
+           
+            <table>
+                <tr>
+                    <th>PacketID</th>
+                    <th>Status</th>
+                </tr>       
+                <c:forEach var="itr" items="${sessionScope.pakketjes}">
+                <jsp:useBean id="now" class="java.util.Date"/> <!-- huidig tijd-->
+                <c:choose>
+                    <c:when test="${itr.getStatus().equals('geleverd')}">
+                        <tr style="background-color: green"> 
+                            <td><input type="submit" value="${itr.getPid()}" name="forms"></td>
+                            <td>${itr.getStatus()}</td>
+                        </tr> 
+                    </c:when>
+                    <c:when test="${itr.getStatus().equals('probleem')}">
+                        <tr style="background-color: red"> 
+                            <td><input type="submit" value="${itr.getPid()}" name="forms"></td>
+                            <td>${itr.getStatus()}</td>
+                        </tr> 
+                    </c:when>
+                    <c:when test="${( now.time - itr.getDatum().getTime() > 48*60*60*1000) && (itr.getStatus().equals('transit')) }"><!-- //zijn we al 48 uur verder? , time wordt gerekent in millis sinds 1970-->
+                        <tr style="background-color: orange"> 
+                            <td><input type="submit" value="${itr.getPid()}" name="forms"></td>
+                            <td>${itr.getStatus()}</td>
+                        </tr>  
+                    </c:when>
+                    <c:otherwise>
                         <tr>
                             <td><input type="submit" value="${itr.getPid()}" name="forms"></td>
                             <td>${itr.getStatus()}</td>
-                        </tr>
-                    </c:forEach>
-                </table>
+                        </tr> 
+                    </c:otherwise>
+                </c:choose>      
+                </c:forEach>
+            </table>
+            <p>
+                Legende kleuren: <br/>
+                <span style="color:green">Groen</span> = geleverd <br/>
+                <span style="color:orange">oranje</span> = het pakketje is al 48u in transit <br/>
+                <span style="color:red">rood</span> = er is een probleem met het pakketje <br/>
+                Geen kleur= pakketje nog niet geleverd maar het is nog geen 48h in transit.
             </p>
+            
         <input type="hidden" name="naarWaar" value="bDetails">
         </form>
         

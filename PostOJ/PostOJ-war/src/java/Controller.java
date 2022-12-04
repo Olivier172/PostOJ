@@ -20,7 +20,7 @@ import javax.ejb.*;
 
 /**
  *
- * @author r0723037
+ * @author  Olivier en Jorn
  */
 @WebServlet(urlPatterns = {"/Controller"})
 public class Controller extends HttpServlet {
@@ -95,28 +95,71 @@ public class Controller extends HttpServlet {
             /*aanmaken van het adres*/
             String naam = request.getParameter("naam");
             String naamennr = request.getParameter("adres");
-            int postcode = Integer.parseInt( request.getParameter("postcode") );
+            int postcode;
+            int gewicht;
+            try {
+               postcode = Integer.parseInt( request.getParameter("postcode") );
+               gewicht =Integer.parseInt(request.getParameter("gewicht"));
+            }
+            catch(Exception e) {
+                //als niet ingevuld, op nul zetten...
+                postcode= 0;
+                gewicht = 0;
+            }
             String gemeente = request.getParameter("gemeente");
             int aid=dm.addAdres(naam, naamennr,postcode, gemeente);
             /*aanmaken van het pakket*/
             String commentaar = request.getParameter("commentaar");
             int pwid = Integer.parseInt(request.getParameter("kourierKeuze")); 
-            int gewicht =Integer.parseInt(request.getParameter("gewicht"));
             dm.addPakket(commentaar, gewicht, aid, pwid);
         }
         if(actie.equals("updatepakket")) {
             //hier moet nog code komen om info over een pakket te updaten als de bediendes wijzigingen hebben aangebracht
+            int pid = (int) session.getAttribute("pid");
+            int wid;
+             //als checkbox gecheckt ,dan is de waarde van de parameter wijzigKoerier "on" en dus niet null
+             //als de checkbox niet gecheckt dan is de waarde van de parameter wijzigKoerier null en willen we dus onze wid behouden
+            if(request.getParameter("wijzigKoerier") != null) {
+                wid = Integer.parseInt(request.getParameter("kourierKeuze")); //nieuwe koerier
+            }
+            else {
+                wid = Integer.parseInt(request.getParameter("wid")); //behoud koerier
+            }
+            int gewicht;
+            int postcode;
+            try {
+               gewicht= Integer.parseInt(request.getParameter("gewicht")); 
+               postcode= Integer.parseInt(request.getParameter("postcode")); 
+            }
+            catch(Exception e) {
+                //als niet ingevuld , 0 invullen...
+                gewicht=0;
+                postcode=0;
+            }
+            String commentaar = request.getParameter("commentaar");
+            String naam = request.getParameter("naam");
+            String straatennr = request.getParameter("straatennr");
+            String gemeente = request.getParameter("gemeente");
+            dm.updatePakket(pid, wid, gewicht, commentaar, naam, straatennr, postcode, gemeente);
         }
         if(actie.equals("updatestatus")) {
             String nieuwestatus = submitValue; //geleverd of probleem
             int pid = (int)session.getAttribute("pid"); //pid terug ophalen uit sessie
-            
+            dm.updatePakketStatus(pid, nieuwestatus);
         }
         
         /*Bepalen naar welke pagina moet doorverwezen worden*/
         if(nw.equals("tracking")){
-            HttpSession sessie = request.getSession();
-            sessie.setAttribute("packetID", request.getParameter("packetID"));
+            int pid; 
+            try {
+                pid = Integer.parseInt(request.getParameter("pid"));
+            }
+            catch (Exception e){
+                pid = 0;//init voor het geval dat het niet goed wordt ingegeven
+            }
+            session.setAttribute("pid", pid);
+            String status = dm.getPakketStatus(pid);
+            session.setAttribute("status", status);
             RequestDispatcher view = request.getRequestDispatcher("tracking.jsp");
             view.forward(request, response);
         }
@@ -158,6 +201,9 @@ public class Controller extends HttpServlet {
             String wnaam = pd.get(11); session.setAttribute("wnaam",wnaam);
             String wfunctie = pd.get(12); session.setAttribute("wfunctie",wfunctie);
             
+            //koeriers meegeven voor eventueel een andere toe te wijzen aan dit pakket
+            List koeriers = dm.getKoeriers();
+            session.setAttribute("koeriers",koeriers);
             RequestDispatcher view = request.getRequestDispatcher("bDetails.jsp");
             view.forward(request, response); 
         }

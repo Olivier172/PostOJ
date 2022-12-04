@@ -79,6 +79,7 @@ public class DataManager implements DataManagerRemote {
         return result;
     }
     
+ 
     //geeft alle details van een pakket terug in een list<String> object
     /* Dit bevat in volgorde:
     *   status
@@ -142,6 +143,44 @@ public class DataManager implements DataManagerRemote {
         functie varchar(40)     ->String functie
     );
     */
+    
+    @Override
+    public String getPakketStatus(int pid) {
+        String status;
+        try{
+            Pakket p = em.find(Pakket.class,pid);
+            status = p.getStatus();
+        }
+        catch (Exception e) {
+            status = "pakket niet gevonden";
+        }
+        return status;
+        
+    }
+       
+    @Override
+    public void updatePakketStatus(int pid, String status) {
+        Pakket p = em.find(Pakket.class,pid);
+        if( !(p.getStatus().equals("geleverd")) ){//enkel status wijzigen als het nog niet geleverd was
+            p.setStatus(status);
+        }        
+    }
+    
+    public void updatePakket(int pid, int wid, int gewicht, String commentaar, String naam, String straatennr, int postcode, String gemeente) {
+        Pakket p = em.find(Pakket.class,pid);
+        Werknemers w= em.find(Werknemers.class,wid);
+        Adres a = p.getPaid();
+        /*pakket info updaten*/
+        p.setGewicht(gewicht);
+        p.setCommentaar(commentaar);
+        p.setPwid(w); //nieuwe koerier toewijzen
+        /*adres info updaten*/
+        a.setNaam(naam);
+        a.setStraatennr(straatennr);
+        a.setPostcode(postcode);
+        a.setGemeente(gemeente);
+    }
+    
     @Override
     public void addWerknemers(String functie, String wnaam){
         Werknemers w = new Werknemers();
@@ -177,7 +216,6 @@ public class DataManager implements DataManagerRemote {
         a.setPostcode(postcode);
         a.setGemeente(gemeente);
         em.persist(a); //opslaan in databank
-        //em.flush();
         return a.getAid(); //geef adres identifier terug
     }
     

@@ -79,9 +79,12 @@
         <form method="post" action= "<c:url value='Controller.do'/>">
             <input type="hidden" name="actie" value="updatestatus">
             <input type="hidden" name="naarWaar" value="kOverzicht">
-            <input type="hidden" name="pid" value="${sessionScope.pid}">
-            <input type="submit" name="forms" value="geleverd">
-            <input type="submit" name="forms" value="probleem">
+            <!--alleen als het nog niet geleverd is kan je het aanpassen -->
+            <c:if test="${!(sessionScope.status.equals(\"geleverd\"))}">
+                <input type="submit" name="forms" value="geleverd">
+                <input type="submit" name="forms" value="probleem">
+            </c:if>
+            
         </form>
             
         <form method="post" action= "<c:url value='Controller.do'/>">

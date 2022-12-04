@@ -16,6 +16,9 @@
             login {
                 text-align:right;
             }
+            form {
+                margin: 10px
+            }
         </style>
     </head>
     <body>
@@ -41,10 +44,10 @@
         <form method="post" action= "<c:url value='Controller.do'/>">
             <p>
                 packetID:
-                <input type="number" name="packetID"/>
+                <input type="number" name="pid"/>
             </p>
             <input type="hidden" name="naarWaar" value="tracking">
-            <input type="submit" value="toTracking" name="forms">
+            <input type="submit" value="Track" name="forms">
         </form>
             
         

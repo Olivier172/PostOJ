@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"prefix="c" %>
 <!DOCTYPE html>
-<html>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Details pakket ${sessionScope.pid}</title>
@@ -22,7 +22,7 @@
             }
         </style>
     </head>
-    <body>
+    
         <form method="post" action= "<c:url value='Controller.do'/>">
             <h1>Details pakket met pid ${sessionScope.pid}</h1>
                 <table>
@@ -88,15 +88,29 @@
                         <td>wfunctie</td>
                         <td>${sessionScope.wfunctie}</td>
                     </tr>
+                    <tr>
+                        <td style="border-top-width: 4px">Andere koerier toewijzen?<input type="checkbox" name="wijzigKoerier"/></td>
+                        <td style="border-top-width: 4px">
+                            <select name="kourierKeuze">
+                            <c:forEach var="itr" items="${sessionScope.koeriers}">
+                                <option value="${itr.getWid()}"> ${itr.getWnaam()} </option> 
+                            </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
                 </table>
+            <input type="hidden" name="wid" value="${sessionScope.wid}">
             <input type="hidden" name="actie" value="updatepakket">
             <input type="hidden" name="naarWaar" value="bOverzicht">
-            <input type="submit" value="update" name="forms">
+            <c:if test="${ !(sessionScope.status.equals(\"geleverd\"))}">
+                <input type="submit" value="update" name="forms">
+            </c:if>
         </form>
+        
         <form method="post" action= "<c:url value='Controller.do'/>">
             <!--hier is geen actie hiddenfield omdat we niets aanpassen als we teruggaan -->
             <input type="hidden" name="naarWaar" value="bOverzicht">
             <input type="submit" value="terug" name="forms">
         </form>
-    </body>
-</html>
+    
+

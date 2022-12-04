@@ -46,19 +46,19 @@
                 <c:forEach var="itr" items="${sessionScope.pakketjes_koerier}">
                     <jsp:useBean id="now" class="java.util.Date"/> <!-- huidig tijd-->
                     <c:choose>
-                        <c:when test="${itr.getStatus() == 'geleverd'}">
+                        <c:when test="${itr.getStatus().equals('geleverd')}">
                             <tr style="background-color: green"> 
                                 <td><input type="submit" value="${itr.getPid()}" name="forms"></td>
                                 <td>${itr.getStatus()}</td>
                             </tr> 
                         </c:when>
-                        <c:when test="${itr.getStatus() == 'probleem'}">
+                        <c:when test="${itr.getStatus().equals('probleem')}">
                             <tr style="background-color: red"> 
                                 <td><input type="submit" value="${itr.getPid()}" name="forms"></td>
                                 <td>${itr.getStatus()}</td>
                             </tr> 
                         </c:when>
-                        <c:when test="${( now.time - itr.getDatum().getTime() > 48*60*60*1000) && (itr.getStatus() == 'transit') }"><!-- //zijn we al 48 uur verder? , time wordt gerekent in millis sinds 1970-->
+                        <c:when test="${( now.time - itr.getDatum().getTime() > 48*60*60*1000) && (itr.getStatus().equals('transit')) }"><!-- //zijn we al 48 uur verder? , time wordt gerekent in millis sinds 1970-->
                             <tr style="background-color: orange"> 
                                 <td><input type="submit" value="${itr.getPid()}" name="forms"></td>
                                 <td>${itr.getStatus()}</td>
