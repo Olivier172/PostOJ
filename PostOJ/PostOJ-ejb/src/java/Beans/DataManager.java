@@ -72,13 +72,30 @@ public class DataManager implements DataManagerRemote {
         } 
     }
     
-    
+    //geeft alle pakketten terug
     @Override
     public List getPakketten(){
         List result = em.createQuery("select p from Pakket p").getResultList();
         return result;
     }
     
+    //geeft alle details van een pakket terug in een list<String> object
+    /* Dit bevat in volgorde:
+    *   status
+    *   datum
+    *   tijd
+    *   gewicht
+    *   commentaar
+    *   aid
+    *   naam    
+    *   straatennr 
+    *   postcode
+    *   gemeente
+    *   wid
+    *   wnaam
+    *   functie
+    */
+    //@param pid: de pakket identifier van welk pakket je de info wilt
     @Override
     public List<String> getPakketDetails(int pid) {
         List<String> result= new ArrayList<String>();
@@ -104,6 +121,16 @@ public class DataManager implements DataManagerRemote {
         result.add(w.getWnaam());
         result.add(w.getFunctie());
         
+        return result;
+    }
+    
+    //geef de pakketten van een specifieke koerier terug in een lijst
+    //@param wid: werknemer id van de koerier vanwie je de toegewezen pakketten wilt hebben
+    @Override
+    public List getPakkettenKoerier(int wid) {
+        List result;
+        Werknemers w= em.find(Werknemers.class,wid); //vind de juiste werknemer uit de databank en steek dit in een werknemer objectje
+        result = em.createQuery("select p from Pakket p where p.pwid = ?1").setParameter(1, w).getResultList();
         return result;
     }
     

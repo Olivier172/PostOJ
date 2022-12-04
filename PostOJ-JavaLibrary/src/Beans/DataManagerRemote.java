@@ -21,6 +21,7 @@ public interface DataManagerRemote {
     public int getAdresAid(String naam);
     public List getPakketten();
     public List<String> getPakketDetails(int pid);
+    public List getPakkettenKoerier(int wid);
     public void addWerknemers(String functie, String wnaam);
     public int addAdres(String naam, String straatennr, Integer postcode, String gemeente);
     public void addPakket(String commentaar,int gewicht, int paid, int pwid);

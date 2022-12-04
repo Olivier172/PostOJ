@@ -92,17 +92,25 @@ public class Controller extends HttpServlet {
         System.out.println("submitValue = " + submitValue);
         /*checken op een actie dat we moeten doen met de databank*/
         if(actie.equals("nieuwpakket")) { //normaal komen we van register.jsp en is het form goed ingevuld...
-                /*aanmaken van het adres*/
-                String naam = request.getParameter("naam");
-                String naamennr = request.getParameter("adres");
-                int postcode = Integer.parseInt( request.getParameter("postcode") );
-                String gemeente = request.getParameter("gemeente");
-                int aid=dm.addAdres(naam, naamennr,postcode, gemeente);
-                /*aanmaken van het pakket*/
-                String commentaar = request.getParameter("commentaar");
-                int pwid = Integer.parseInt(request.getParameter("kourierKeuze")); 
-                int gewicht =Integer.parseInt(request.getParameter("gewicht"));
-                dm.addPakket(commentaar, gewicht, aid, pwid);
+            /*aanmaken van het adres*/
+            String naam = request.getParameter("naam");
+            String naamennr = request.getParameter("adres");
+            int postcode = Integer.parseInt( request.getParameter("postcode") );
+            String gemeente = request.getParameter("gemeente");
+            int aid=dm.addAdres(naam, naamennr,postcode, gemeente);
+            /*aanmaken van het pakket*/
+            String commentaar = request.getParameter("commentaar");
+            int pwid = Integer.parseInt(request.getParameter("kourierKeuze")); 
+            int gewicht =Integer.parseInt(request.getParameter("gewicht"));
+            dm.addPakket(commentaar, gewicht, aid, pwid);
+        }
+        if(actie.equals("updatepakket")) {
+            //hier moet nog code komen om info over een pakket te updaten als de bediendes wijzigingen hebben aangebracht
+        }
+        if(actie.equals("updatestatus")) {
+            String nieuwestatus = submitValue; //geleverd of probleem
+            int pid = (int)session.getAttribute("pid"); //pid terug ophalen uit sessie
+            
         }
         
         /*Bepalen naar welke pagina moet doorverwezen worden*/
@@ -132,7 +140,7 @@ public class Controller extends HttpServlet {
             int pid = Integer.parseInt(submitValue);//pakketnr in de submit knop, met sessie meegeven
             session.setAttribute("pid",pid); 
             //alle info over dit pakket meegeven via de session:
-            List<String> pd =  dm.getPakketDetails(pid);
+            List<String> pd =  dm.getPakketDetails(pid); //pd=pakket details lijst
             //pakketinfo
             String status = pd.get(0); session.setAttribute("status",status); 
             String datum = pd.get(1); session.setAttribute("datum",datum);
@@ -154,13 +162,36 @@ public class Controller extends HttpServlet {
             view.forward(request, response); 
         }
         else if(nw.equals("kOverzicht")){
+            //AANDACHT Jorn:
+            //momenteel is hier hard gecodeerd dat de eerste koerier inlogt en zijn pakketjes wilt zien.
+            //hier moet je eigenlijk erachter komen welke koerier is ingelogd en wat zijn wid is zodat 
+            //de pakketjes die aan deze koerier zijn toegewezen worden weergegeven in kOverzicht :)
+            //misschien is het zo : Authentication auth = SecurityContextHolder.getContext().getAuthentication(); en dan op auth.getPrincipal(), maar ben niet zeker
+            int wid = ((Werknemers)dm.getKoeriers().get(0)).getWid(); 
+            List pakketjes_koerier = dm.getPakkettenKoerier(wid);
+            session.setAttribute("pakketjes_koerier",pakketjes_koerier);
+            session.setAttribute("wid",wid);
             RequestDispatcher view = request.getRequestDispatcher("kOverzicht.jsp");
             view.forward(request, response);
         }
-        
         else if(nw.equals("kDetails")) {
-            int pid = Integer.parseInt(request.getParameter("pid"));
-            session.setAttribute("pid",pid); //pakketnr in de submit knop, met sessie meegeven
+            int pid = Integer.parseInt(submitValue);//pakketnr in de submit knop, met sessie meegeven
+            session.setAttribute("pid",pid); 
+            //alle info over dit pakket meegeven via de session:
+            List<String> pd =  dm.getPakketDetails(pid); //pd=pakket details lijst
+            //pakketinfo
+            String status = pd.get(0); session.setAttribute("status",status); 
+            String datum = pd.get(1); session.setAttribute("datum",datum);
+            String tijd = pd.get(2); session.setAttribute("tijd",tijd);
+            String gewicht = pd.get(3); session.setAttribute("gewicht",gewicht);
+            String commentaar = pd.get(4); session.setAttribute("commentaar",commentaar);
+            //adresinfo
+            String aid = pd.get(5); session.setAttribute("aid",aid);
+            String naam = pd.get(6); session.setAttribute("naam",naam);
+            String straatennr = pd.get(7); session.setAttribute("straatennr",straatennr);
+            String postcode = pd.get(8); session.setAttribute("postcode",postcode);
+            String gemeente = pd.get(9); session.setAttribute("gemeente",gemeente);
+            
             RequestDispatcher view = request.getRequestDispatcher("kDetails.jsp");
             view.forward(request, response);
         }

@@ -51,6 +51,11 @@
             <input type="hidden" name="naarWaar" value="register">
             <input type="submit" value="Een nieuw pakket registreren" name="forms">
         </form>
+            
+        <form method="post" action= "<c:url value='Controller.do'/>">
+            <input type="hidden" name="naarWaar" value="index">
+            <input type="submit" value="log uit" name="forms">
+        </form>
         
     </body>
 </html>
