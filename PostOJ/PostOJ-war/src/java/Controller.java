@@ -40,14 +40,14 @@ public class Controller extends HttpServlet {
         List werknemers = dm.getWerknemers(); //hebben we al werknemers?
         if(werknemers.isEmpty()) {
             /* Aanmaken van enkele werknemers bij PostOJ*/
-            dm.addWerknemers("koerier", "jos");
-            dm.addWerknemers("koerier", "mark");
-            dm.addWerknemers("koerier", "filip");
-            dm.addWerknemers("koerier", "jan");
-            dm.addWerknemers("koerier", "bob");
-            dm.addWerknemers("bediende", "marie");
-            dm.addWerknemers("bediende", "josephine");
-            dm.addWerknemers("bediende", "joeri");
+            dm.addWerknemers("koerier", "Jos");
+            dm.addWerknemers("koerier", "Mark");
+            dm.addWerknemers("koerier", "Filip");
+            dm.addWerknemers("koerier", "Jan");
+            dm.addWerknemers("koerier", "Bob");
+            dm.addWerknemers("bediende", "Marie");
+            dm.addWerknemers("bediende", "Josephine");
+            dm.addWerknemers("bediende", "Joeri");
             dm.addWerknemers("bediende", "Olivier");
             dm.addWerknemers("bediende", "Jorn");
         }
@@ -170,13 +170,13 @@ public class Controller extends HttpServlet {
         else if(nw.equals("bOverzicht")){
             List pakketjes = dm.getPakketten();
             session.setAttribute("pakketjes", pakketjes);
-            RequestDispatcher view = request.getRequestDispatcher("bOverzicht.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("bediendes/bOverzicht.jsp");
             view.forward(request, response);
         }
         else if(nw.equals("register")){
             List koeriers = dm.getKoeriers();
             session.setAttribute("koeriers", koeriers);
-            RequestDispatcher view = request.getRequestDispatcher("register.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("bediendes/register.jsp");
             view.forward(request, response);
         }
         else if(nw.equals("bDetails")) {
@@ -204,7 +204,7 @@ public class Controller extends HttpServlet {
             //koeriers meegeven voor eventueel een andere toe te wijzen aan dit pakket
             List koeriers = dm.getKoeriers();
             session.setAttribute("koeriers",koeriers);
-            RequestDispatcher view = request.getRequestDispatcher("bDetails.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("bediendes/bDetails.jsp");
             view.forward(request, response); 
         }
         else if(nw.equals("kOverzicht")){
@@ -217,7 +217,7 @@ public class Controller extends HttpServlet {
             List pakketjes_koerier = dm.getPakkettenKoerier(wid);
             session.setAttribute("pakketjes_koerier",pakketjes_koerier);
             session.setAttribute("wid",wid);
-            RequestDispatcher view = request.getRequestDispatcher("kOverzicht.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("koeriers/kOverzicht.jsp");
             view.forward(request, response);
         }
         else if(nw.equals("kDetails")) {
@@ -238,7 +238,7 @@ public class Controller extends HttpServlet {
             String postcode = pd.get(8); session.setAttribute("postcode",postcode);
             String gemeente = pd.get(9); session.setAttribute("gemeente",gemeente);
             
-            RequestDispatcher view = request.getRequestDispatcher("kDetails.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("koeriers/kDetails.jsp");
             view.forward(request, response);
         }
     }
