@@ -165,19 +165,22 @@ public class Controller extends HttpServlet {
         }
         else if(nw.equals("index")){
             RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+            request.logout();
             view.forward(request, response);
         }
         else if(nw.equals("bOverzicht")){
             List pakketjes = dm.getPakketten();
             session.setAttribute("pakketjes", pakketjes);
             RequestDispatcher view = request.getRequestDispatcher("bediendes/bOverzicht.jsp");
-            view.forward(request, response);
+            //view.forward(request, response);
+            response.sendRedirect("bediendes/bOverzicht.jsp");
         }
         else if(nw.equals("register")){
             List koeriers = dm.getKoeriers();
             session.setAttribute("koeriers", koeriers);
             RequestDispatcher view = request.getRequestDispatcher("bediendes/register.jsp");
-            view.forward(request, response);
+            //view.forward(request, response);
+            response.sendRedirect("bediendes/register.jsp");
         }
         else if(nw.equals("bDetails")) {
             int pid = Integer.parseInt(submitValue);//pakketnr in de submit knop, met sessie meegeven
@@ -205,7 +208,11 @@ public class Controller extends HttpServlet {
             List koeriers = dm.getKoeriers();
             session.setAttribute("koeriers",koeriers);
             RequestDispatcher view = request.getRequestDispatcher("bediendes/bDetails.jsp");
-            view.forward(request, response); 
+            //view.forward(request, response);
+            response.sendRedirect("bediendes/bDetails.jsp");
+        }
+        else if(nw.equals("kRedirect")){
+            response.sendRedirect("koeriers/kRedirect.jsp");
         }
         else if(nw.equals("kOverzicht")){
             //AANDACHT Jorn:
@@ -213,12 +220,19 @@ public class Controller extends HttpServlet {
             //hier moet je eigenlijk erachter komen welke koerier is ingelogd en wat zijn wid is zodat 
             //de pakketjes die aan deze koerier zijn toegewezen worden weergegeven in kOverzicht :)
             //misschien is het zo : Authentication auth = SecurityContextHolder.getContext().getAuthentication(); en dan op auth.getPrincipal(), maar ben niet zeker
-            int wid = ((Werknemers)dm.getKoeriers().get(0)).getWid(); 
+ 
+            //RequestDispatcher view = request.getRequestDispatcher("koeriers/kOverzicht.jsp");
+            //view.forward(request, response);
+            String wnaam = request.getUserPrincipal().getName();
+            System.out.println(wnaam);
+            int wid = dm.getKoerierWid(wnaam);
+            //int wid = ((Werknemers)dm.getKoeriers().get(0)).getWid(); 
             List pakketjes_koerier = dm.getPakkettenKoerier(wid);
             session.setAttribute("pakketjes_koerier",pakketjes_koerier);
             session.setAttribute("wid",wid);
-            RequestDispatcher view = request.getRequestDispatcher("koeriers/kOverzicht.jsp");
-            view.forward(request, response);
+            response.sendRedirect("koeriers/kOverzicht.jsp");
+            
+
         }
         else if(nw.equals("kDetails")) {
             int pid = Integer.parseInt(submitValue);//pakketnr in de submit knop, met sessie meegeven
@@ -240,6 +254,7 @@ public class Controller extends HttpServlet {
             
             RequestDispatcher view = request.getRequestDispatcher("koeriers/kDetails.jsp");
             view.forward(request, response);
+            //response.sendRedirect("koeriers/kDetails.jsp");
         }
     }
 

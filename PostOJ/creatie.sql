@@ -7,10 +7,10 @@
  * Author:  MM
  * Created: 1-dec-2022
  */
+
 drop table Pakket;
 drop table Adres;
 drop table Werknemers;
-
 
 create table Werknemers(
     wid int primary key,

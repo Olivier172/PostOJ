@@ -45,6 +45,18 @@ public class DataManager implements DataManagerRemote {
         return result;
     }
     
+    @Override
+    public int getKoerierWid(String wnaam){
+        List result = em.createNamedQuery("Werknemers.findByWnaam").setParameter("wnaam", wnaam).getResultList();
+        try{
+            int wid = ((Werknemers)result.get(0)).getWid();
+            return wid;
+        }
+        catch (Exception e) {
+            return -1; //niet gevonden
+        } 
+    }
+    
     
     @Override
     public List getBediendes(){
@@ -250,6 +262,17 @@ public class DataManager implements DataManagerRemote {
         p.setPwid(werknemer); //geef werknemer objectje mee als foreign key verwijzing
         //System.out.println("commentaar " + p.getCommentaar() + " paid " + p.getPaid() + " pwid " + p.getPwid() + " pid " + p.getPid() + " status " + p.getStatus() + " datum " + p.getDatum() + " tijd " + p.getTijd() );
         em.persist(p); //opslaan in databank
+    }
+    
+    
+    public int getTransitAmount(){
+        return (int)em.createQuery("select count(p.pid) from Pakket p where p.status='Transit'").getSingleResult();
+    }
+    public int getGeleverdAmount(){
+        return (int)em.createQuery("select count(p.pid) from Pakket p where p.status='Geleverd'").getSingleResult();
+    }
+    public int getProbleemAmount(){
+        return (int)em.createQuery("select count(p.pid) from Pakket p where p.status='Probleem'").getSingleResult();        
     }
 }
 
