@@ -164,6 +164,8 @@ public class Controller extends HttpServlet {
             view.forward(request, response);
         }
         else if(nw.equals("index")){
+            System.out.println("##testprint##");
+            System.out.println(Integer.toString(dm.getTransitAmount()));
             RequestDispatcher view = request.getRequestDispatcher("index.jsp");
             request.logout();
             view.forward(request, response);

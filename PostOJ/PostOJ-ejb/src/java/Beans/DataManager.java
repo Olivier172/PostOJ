@@ -264,15 +264,22 @@ public class DataManager implements DataManagerRemote {
         em.persist(p); //opslaan in databank
     }
     
-    
+    @Override
     public int getTransitAmount(){
-        return (int)em.createQuery("select count(p.pid) from Pakket p where p.status='Transit'").getSingleResult();
+        Long iets = (Long) em.createQuery("select count(p.pid) from Pakket p where p.status = ?1").setParameter(1, "transit").getSingleResult();
+        return Long.valueOf(iets).intValue();
     }
+    
+    @Override
     public int getGeleverdAmount(){
-        return (int)em.createQuery("select count(p.pid) from Pakket p where p.status='Geleverd'").getSingleResult();
+        Long iets = (Long) em.createQuery("select count(p.pid) from Pakket p where p.status = ?1").setParameter(1, "geleverd").getSingleResult();
+        return Long.valueOf(iets).intValue();
     }
+    
+    @Override
     public int getProbleemAmount(){
-        return (int)em.createQuery("select count(p.pid) from Pakket p where p.status='Probleem'").getSingleResult();        
+        Long iets = (Long) em.createQuery("select count(p.pid) from Pakket p where p.status = ?1").setParameter(1, "probleem").getSingleResult();
+        return Long.valueOf(iets).intValue();        
     }
 }
 
